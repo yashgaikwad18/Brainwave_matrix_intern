@@ -1,0 +1,134 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <limits> // Required for numeric_limits
+
+using namespace std;
+
+class ATM {
+private:
+    string account_number;
+    string pin;
+    double balance;
+    vector<string> transaction_history;
+
+public:
+    ATM(string account_number, string pin, double balance = 0.0) {
+        this->account_number = account_number;
+        this->pin = pin;
+        this->balance = balance;
+    }
+
+    bool verify_pin(const string& entered_pin) const {
+        return pin == entered_pin;
+    }
+
+    void display_balance() const {
+        cout << "Current balance: Rs." << balance << endl;
+    }
+
+    void deposit(double amount) {
+        balance += amount;
+        transaction_history.push_back("Deposited Rs." + to_string(amount));
+        cout << "Deposit successful." << endl;
+    }
+
+    void withdraw(double amount) {
+        if (amount <= balance) {
+            balance -= amount;
+            transaction_history.push_back("Withdrew Rs." + to_string(amount));
+            cout << "Withdrawal successful." << endl;
+        } else {
+            cout << "Insufficient balance." << endl;
+        }
+    }
+
+    void display_transaction_history() const {
+        cout << "\nTransaction History:" << endl;
+        if (transaction_history.empty()) {
+            cout << "No transactions yet." << endl;
+        } else {
+            for (const auto& transaction : transaction_history) {
+                cout << transaction << endl;
+            }
+        }
+    }
+
+    string get_account_number() const {
+        return account_number;
+    }
+};
+
+int main() {
+    ATM atm("1234567890", "1234", 1000.0);
+
+    string entered_pin;
+    int choice;
+    double amount;
+
+    cout << "Welcome to the ATM!" << endl;
+
+    // Pin verification loop (max 3 attempts)
+    int pin_attempts = 0;
+    while (pin_attempts < 3) {
+        cout << "Enter your PIN: ";
+        cin >> entered_pin;
+
+        if (atm.verify_pin(entered_pin)) {
+            break; // Correct PIN entered
+        } else {
+            pin_attempts++;
+            cout << "Incorrect PIN. Attempts remaining: " << 3 - pin_attempts << endl;
+        }
+    }
+
+    if (pin_attempts == 3) {
+        cout << "Too many incorrect PIN attempts. Exiting." << endl;
+        return 1; // Indicate an error
+    }
+
+    // ATM menu loop
+    while (true) {
+        cout << "\nATM Menu:" << endl;
+        cout << "1. Check Balance" << endl;
+        cout << "2. Deposit" << endl;
+        cout << "3. Withdraw" << endl;
+        cout << "4. Transaction History" << endl;
+        cout << "5. Exit" << endl;
+        cout << "Enter your choice: ";
+
+        // Input validation to prevent non-numeric input
+        if (!(cin >> choice)) {
+            cout << "Invalid input. Please enter a number." << endl;
+            cin.clear(); // Clear error flags
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard bad input
+            continue; // Go back to the menu start
+        }
+
+        switch (choice) {
+            case 1:
+                atm.display_balance();
+                break;
+            case 2:
+                cout << "Enter amount to deposit: Rs.";
+                cin >> amount;
+                atm.deposit(amount);
+                break;
+            case 3:
+                cout << "Enter amount to withdraw: Rs.";
+                cin >> amount;
+                atm.withdraw(amount);
+                break;
+            case 4:
+                atm.display_transaction_history();
+                break;
+            case 5:
+                cout << "Thank you for using the ATM. Goodbye!" << endl;
+                return 0; // Successful exit
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+        }
+    }
+
+    return 0;
+}
