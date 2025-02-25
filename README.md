@@ -2,9 +2,13 @@
 Task name- A fully functional ATM interface using C++
 
 A fully functional ATM interface in C++ that allows users to:
+
 Check their balance
-Deposit money
-Withdraw money
+
+Deposit money 
+
+Withdraw money 
+
 Exit the program
 
  Features of this ATM Interface:
