@@ -1,4 +1,5 @@
-# Brainwave_matrix_intern I have  completed my task given by brainwave matrix solution. 
+# Brainwave_matrix_intern 
+I have  completed my task given by brainwave matrix solution. 
 Task name- A fully functional ATM interface using C++
 
 A fully functional ATM interface in C++ that allows users to:
