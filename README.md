@@ -1,7 +1,8 @@
-# Brainwave_matrix_intern 
+# Brainwave_matrix_intern
+
 Name-Yash Najukram Gaikwad
 
-I have  completed my task given by brainwave matrix solution. 
+Hello, I have  completed my task given by brainwave matrix solution. 
 
 Task name- A fully functional ATM interface using C++
 
